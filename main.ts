@@ -3,11 +3,18 @@ interface GroceryItem {
     done: boolean;
   }
   
-  let groceries: GroceryItem[] = [
-    { task: "Half and half", done: false },
-    { task: "Bread", done: false },
-    { task: "Veggies", done: false }
-  ];
+  let groceries: GroceryItem[] = [];
+  
+  // 🚀 Load from localStorage (if anything's there)
+  const savedList = localStorage.getItem("groceries");
+  if (savedList) {
+    groceries = JSON.parse(savedList);
+  }
+  
+  function saveGroceries(): void {
+    // 💾 Save current groceries to browser
+    localStorage.setItem("groceries", JSON.stringify(groceries));
+  }
   
   function showGroceries(): void {
     const list = document.getElementById("foodList") as HTMLUListElement;
@@ -27,8 +34,9 @@ interface GroceryItem {
         if (!item.done) {
           item.done = true;
         } else {
-          groceries.splice(index, 1);
+          groceries.splice(index, 1); // remove if clicked again
         }
+        saveGroceries(); // 💾 save after update
         showGroceries();
       };
   
@@ -44,9 +52,11 @@ interface GroceryItem {
     if (newItemText !== "") {
       groceries.push({ task: newItemText, done: false });
       input.value = "";
+      saveGroceries(); // 💾 save after add
       showGroceries();
     }
   });
   
-  showGroceries();
+  showGroceries(); // 🟢 render list
+  
   
