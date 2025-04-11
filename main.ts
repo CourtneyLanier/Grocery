@@ -12,8 +12,38 @@ interface GroceryItem {
   }
   
   function saveGroceries(): void {
-    // 💾 Save current groceries to browser
-    localStorage.setItem("groceries", JSON.stringify(groceries));
+    const list = document.getElementById("foodList") as HTMLUListElement;
+    list.innerHTML = "";
+
+      // 📦 Sort groceries: not done first, then done
+  const sorted = [...groceries].sort((a, b) => {
+    return Number(a.done) - Number(b.done);
+  });
+
+  sorted.forEach((item, index) => {
+    const li = document.createElement("li");
+
+    if (item.done) {
+      li.classList.add("checked");
+      li.textContent = item.task + " ✅";
+    } else {
+      li.textContent = item.task;
+    }
+
+    li.onclick = () => {
+      if (!item.done) {
+        item.done = true;
+      } else {
+        // Find the actual index in original array to remove
+        const originalIndex = groceries.findIndex(g => g.task === item.task && g.done === item.done);
+        groceries.splice(originalIndex, 1);
+      }
+      saveGroceries();
+      showGroceries();
+    };
+
+    list.appendChild(li);
+  });
   }
   
   function showGroceries(): void {
@@ -59,4 +89,16 @@ interface GroceryItem {
   
   showGroceries(); // 🟢 render list
   
+  document.getElementById("clearButton")!.addEventListener("click", () => {
+    if (confirm("Are you sure you want to clear the list?")) {
+      groceries = [];
+      saveGroceries();
+      showGroceries();
+    }
+  });
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js').then(() => {
+      console.log('Service Worker Registered');
+    });
+  }
   
