@@ -1,41 +1,52 @@
-interface toDoItem {
+interface GroceryItem {
     task: string;
-    done: Boolean;
-}
-
-let groceries: toDoItem[] = [
+    done: boolean;
+  }
+  
+  let groceries: GroceryItem[] = [
     { task: "Half and half", done: false },
     { task: "Bread", done: false },
-    { task: "Veggies", done: false },
-    { task: "Frozen Veggies", done: false },
-    { task: "Rice", done: false },
-    { task: "Sliced Cheese", done: false },
-    { task: "Chips", done: false }
-];
-
-function showGroceries() {
-    const list = document.getElementById("foodList");
-    if (!list) return;
-
+    { task: "Veggies", done: false }
+  ];
+  
+  function showGroceries(): void {
+    const list = document.getElementById("foodList") as HTMLUListElement;
     list.innerHTML = "";
-
-    groceries.forEach((groceries, index) => {
-        const li = document.createElement("li");
-
-        li.textContent = `${groceries.task} - ${groceries.done ? "✅" : "❌"}`;
-            
-        if (!groceries.done) {
-            const button = document.createElement("button");
-            button.textContent = "Mark Done";
-            button.onclick = () => {
-                groceries.done = true;
-                showGroceries();
-            };
-            li.appendChild(button);
-        }    
-
-        list.appendChild(li);
+  
+    groceries.forEach((item, index) => {
+      const li = document.createElement("li");
+  
+      if (item.done) {
+        li.classList.add("checked");
+        li.textContent = item.task + " ✅";
+      } else {
+        li.textContent = item.task;
+      }
+  
+      li.onclick = () => {
+        if (!item.done) {
+          item.done = true;
+        } else {
+          groceries.splice(index, 1);
+        }
+        showGroceries();
+      };
+  
+      list.appendChild(li);
     });
-}
-
-showGroceries();
+  }
+  
+  document.getElementById("addItemForm")!.addEventListener("submit", function (e) {
+    e.preventDefault();
+  
+    const input = document.getElementById("newItem") as HTMLInputElement;
+    const newItemText = input.value.trim();
+    if (newItemText !== "") {
+      groceries.push({ task: newItemText, done: false });
+      input.value = "";
+      showGroceries();
+    }
+  });
+  
+  showGroceries();
+  
