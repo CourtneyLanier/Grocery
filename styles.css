@@ -67,4 +67,25 @@ body {
     text-decoration: line-through;
     background-color: #e0ffe0;
   }
+  .button-row {
+    display: flex;
+    gap: 10px;             /* spacing between buttons */
+    justify-content: center; /* center in the page */
+    flex-wrap: wrap;       /* makes it wrap nicely on small screens */
+    margin-bottom: 20px;
+  }
   
+  .button-row button {
+    padding: 10px 16px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .button-row button:hover {
+    background-color: #0056b3;
+  }
+   
