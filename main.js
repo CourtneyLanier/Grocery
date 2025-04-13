@@ -14,12 +14,15 @@ function saveGroceries() {
 function showGroceries() {
     const list = document.getElementById("foodList");
     list.innerHTML = "";
-    const sorted = [...groceries];
+    // Split into incomplete and complete
+    const incomplete = groceries.filter(item => !item.done);
+    const complete = groceries.filter(item => item.done);
+    const sorted = [...incomplete, ...complete];
     sorted.forEach((item) => {
         const li = document.createElement("li");
         li.textContent = item.task + (item.done ? " ✅" : "");
         if (item.done) {
-            li.classList.add("checked");
+            li.classList.add("checked", "no-drag");
         }
         li.onclick = () => {
             if (!item.done) {
@@ -35,12 +38,11 @@ function showGroceries() {
                 }
             }
             saveGroceries();
-            showGroceries();
+            showGroceries(); // re-render the list
         };
-        // end of sorted.forEach(...)
         list.appendChild(li);
     });
-    // 🎉 Confetti check
+    // 🎉 Confetti when all are done
     if (groceries.length > 0 && groceries.every(item => item.done)) {
         confetti({
             particleCount: 150,

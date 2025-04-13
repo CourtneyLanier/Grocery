@@ -24,14 +24,17 @@ function showGroceries(): void {
   const list = document.getElementById("foodList") as HTMLUListElement;
   list.innerHTML = "";
 
-  const sorted = [...groceries];
+  // Split into incomplete and complete
+  const incomplete = groceries.filter(item => !item.done);
+  const complete = groceries.filter(item => item.done);
+  const sorted = [...incomplete, ...complete];
 
   sorted.forEach((item) => {
     const li = document.createElement("li");
     li.textContent = item.task + (item.done ? " ✅" : "");
 
     if (item.done) {
-      li.classList.add("checked");
+      li.classList.add("checked", "no-drag");
     }
 
     li.onclick = () => {
@@ -47,22 +50,20 @@ function showGroceries(): void {
       }
 
       saveGroceries();
-      showGroceries();
+      showGroceries(); // re-render the list
     };
 
-// end of sorted.forEach(...)
-list.appendChild(li);
-});
-
-// 🎉 Confetti check
-if (groceries.length > 0 && groceries.every(item => item.done)) {
-  confetti({
-    particleCount: 150,
-    spread: 90,
-    origin: { y: 0.6 }
+    list.appendChild(li);
   });
-}
 
+  // 🎉 Confetti when all are done
+  if (groceries.length > 0 && groceries.every(item => item.done)) {
+    confetti({
+      particleCount: 150,
+      spread: 90,
+      origin: { y: 0.6 }
+    });
+  }
 }
 
 // Handle adding new items
