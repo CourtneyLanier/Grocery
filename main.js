@@ -13,7 +13,7 @@ function saveGroceries() {
 function showGroceries() {
     const list = document.getElementById("foodList");
     list.innerHTML = "";
-    const sorted = [...groceries].sort((a, b) => Number(a.done) - Number(b.done));
+    const sorted = [...groceries];
     sorted.forEach((item) => {
         const li = document.createElement("li");
         li.textContent = item.task + (item.done ? " ✅" : "");
@@ -36,9 +36,10 @@ function showGroceries() {
             saveGroceries();
             showGroceries();
         };
+        // end of sorted.forEach(...)
         list.appendChild(li);
     });
-    // 🎉 Confetti when all done
+    // 🎉 Confetti check
     if (groceries.length > 0 && groceries.every(item => item.done)) {
         confetti({
             particleCount: 150,
@@ -46,6 +47,17 @@ function showGroceries() {
             origin: { y: 0.6 }
         });
     }
+    // 🧲 Enable drag-and-drop sorting
+    new Sortable(document.getElementById("foodList"), {
+        animation: 150,
+        onEnd: function (evt) {
+            const oldIndex = evt.oldIndex;
+            const newIndex = evt.newIndex;
+            const movedItem = groceries.splice(oldIndex, 1)[0];
+            groceries.splice(newIndex, 0, movedItem);
+            saveGroceries();
+        }
+    });
 }
 // Handle adding new items
 (_a = document.getElementById("addItemForm")) === null || _a === void 0 ? void 0 : _a.addEventListener("submit", (e) => {

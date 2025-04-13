@@ -1,4 +1,6 @@
 declare const confetti: any;
+declare const Sortable: any;
+
 
 interface GroceryItem {
   task: string;
@@ -22,7 +24,7 @@ function showGroceries(): void {
   const list = document.getElementById("foodList") as HTMLUListElement;
   list.innerHTML = "";
 
-  const sorted = [...groceries].sort((a, b) => Number(a.done) - Number(b.done));
+  const sorted = [...groceries];
 
   sorted.forEach((item) => {
     const li = document.createElement("li");
@@ -48,17 +50,32 @@ function showGroceries(): void {
       showGroceries();
     };
 
-    list.appendChild(li);
-  });
+// end of sorted.forEach(...)
+list.appendChild(li);
+});
 
-  // 🎉 Confetti when all done
-  if (groceries.length > 0 && groceries.every(item => item.done)) {
-    confetti({
-      particleCount: 150,
-      spread: 90,
-      origin: { y: 0.6 }
-    });
+// 🎉 Confetti check
+if (groceries.length > 0 && groceries.every(item => item.done)) {
+  confetti({
+    particleCount: 150,
+    spread: 90,
+    origin: { y: 0.6 }
+  });
+}
+
+// 🧲 Enable drag-and-drop sorting
+new Sortable(document.getElementById("foodList") as HTMLElement, {
+  animation: 150,
+  onEnd: function (evt: any) {
+    const oldIndex = evt.oldIndex!;
+    const newIndex = evt.newIndex!;
+    const movedItem = groceries.splice(oldIndex, 1)[0];
+    groceries.splice(newIndex, 0, movedItem);
+    saveGroceries();
   }
+});
+
+
 }
 
 // Handle adding new items
