@@ -1,5 +1,6 @@
 "use strict";
 var _a, _b, _c;
+let sortable = null;
 let groceries = [];
 let lastRemoved = null;
 // Load from localStorage
@@ -47,17 +48,18 @@ function showGroceries() {
             origin: { y: 0.6 }
         });
     }
-    // 🧲 Enable drag-and-drop sorting
-    new Sortable(document.getElementById("foodList"), {
-        animation: 150,
-        onEnd: function (evt) {
-            const oldIndex = evt.oldIndex;
-            const newIndex = evt.newIndex;
-            const movedItem = groceries.splice(oldIndex, 1)[0];
-            groceries.splice(newIndex, 0, movedItem);
-            saveGroceries();
-        }
-    });
+    if (!sortable) {
+        sortable = new Sortable(document.getElementById("foodList"), {
+            animation: 150,
+            onEnd: function (evt) {
+                const oldIndex = evt.oldIndex;
+                const newIndex = evt.newIndex;
+                const movedItem = groceries.splice(oldIndex, 1)[0];
+                groceries.splice(newIndex, 0, movedItem);
+                saveGroceries();
+            }
+        });
+    }
 }
 // Handle adding new items
 (_a = document.getElementById("addItemForm")) === null || _a === void 0 ? void 0 : _a.addEventListener("submit", (e) => {

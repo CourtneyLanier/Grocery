@@ -1,6 +1,6 @@
 declare const confetti: any;
 declare const Sortable: any;
-
+let sortable: any = null;
 
 interface GroceryItem {
   task: string;
@@ -63,18 +63,18 @@ if (groceries.length > 0 && groceries.every(item => item.done)) {
   });
 }
 
-// 🧲 Enable drag-and-drop sorting
-new Sortable(document.getElementById("foodList") as HTMLElement, {
-  animation: 150,
-  onEnd: function (evt: any) {
-    const oldIndex = evt.oldIndex!;
-    const newIndex = evt.newIndex!;
-    const movedItem = groceries.splice(oldIndex, 1)[0];
-    groceries.splice(newIndex, 0, movedItem);
-    saveGroceries();
-  }
-});
-
+if (!sortable) {
+  sortable = new Sortable(document.getElementById("foodList") as HTMLElement, {
+    animation: 150,
+    onEnd: function (evt: any) {
+      const oldIndex = evt.oldIndex!;
+      const newIndex = evt.newIndex!;
+      const movedItem = groceries.splice(oldIndex, 1)[0];
+      groceries.splice(newIndex, 0, movedItem);
+      saveGroceries();
+    }
+  });
+}
 
 }
 
