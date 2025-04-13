@@ -48,18 +48,6 @@ function showGroceries() {
             origin: { y: 0.6 }
         });
     }
-    if (!sortable) {
-        sortable = new Sortable(document.getElementById("foodList"), {
-            animation: 150,
-            onEnd: function (evt) {
-                const oldIndex = evt.oldIndex;
-                const newIndex = evt.newIndex;
-                const movedItem = groceries.splice(oldIndex, 1)[0];
-                groceries.splice(newIndex, 0, movedItem);
-                saveGroceries();
-            }
-        });
-    }
 }
 // Handle adding new items
 (_a = document.getElementById("addItemForm")) === null || _a === void 0 ? void 0 : _a.addEventListener("submit", (e) => {
@@ -96,8 +84,19 @@ function showGroceries() {
         alert("Nothing to undo!");
     }
 });
-showGroceries();
-// Service worker
+showGroceries(); // Render the list
+// Drag support gets initialized one time after rendering
+sortable = new Sortable(document.getElementById("foodList"), {
+    animation: 150,
+    onEnd: function (evt) {
+        const oldIndex = evt.oldIndex;
+        const newIndex = evt.newIndex;
+        const movedItem = groceries.splice(oldIndex, 1)[0];
+        groceries.splice(newIndex, 0, movedItem);
+        saveGroceries();
+    }
+});
+// Service worker setup stays last
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('service-worker.js').then(() => {
         console.log('Service Worker Registered');
