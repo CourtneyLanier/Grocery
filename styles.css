@@ -96,7 +96,7 @@ li {
   transition: all 0.3s;
 }
 li.checked {
-  color: green;
+  color: white;
   font-weight: bold;
   text-decoration: line-through;
   background-color: #435a34;
