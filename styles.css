@@ -40,13 +40,13 @@ button {
   height: 42px; /* ensure equal height across buttons */
 }
 
-/* Add button (blue) */
+/* Add button (Green) */
 #addButton {
-  background-color: #007bff;
+  background-color: #45532b;
   color: white;
 }
 #addButton:hover {
-  background-color: #0056b3;
+  background-color: #435a34;
 }
 
 /* Row for Clear + Undo underneath */
@@ -66,7 +66,7 @@ button {
 
 /* Colors for Clear and Undo */
 #clearButton {
-  background-color: #ff6666; /* red-ish */
+  background-color: #8B3A3A; /* red-ish */
   color: white;
 }
 #clearButton:hover {
@@ -74,7 +74,7 @@ button {
 }
 
 #undoButton {
-  background-color: #ffcc66; /* yellow-ish */
+  background-color: #D4A017; /* yellow-ish */
   color: black;
 }
 #undoButton:hover {
@@ -99,7 +99,7 @@ li.checked {
   color: green;
   font-weight: bold;
   text-decoration: line-through;
-  background-color: #e0ffe0;
+  background-color: #D4A017;
 }
 
 /* --- Responsive behavior for larger screens --- */
