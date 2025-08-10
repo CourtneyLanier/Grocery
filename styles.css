@@ -1,91 +1,123 @@
+/* App container for consistent, responsive width */
+.container {
+  width: min(90vw, 480px);
+  margin: 0 auto;
+}
+
 /* Make the whole page centered */
 body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-    margin: 0;
-    background-color: #c9e6f3;
-  }
-  
-  /* Make the form look nice */
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  margin: 0;
+  background-color: #c9e6f3;
+}
+
+/* Form: input + Add side-by-side on small screens */
+form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+/* Input */
+input[type="text"] {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Base button style (Add inherits this) */
+button {
+  padding: 10px 16px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  height: 42px; /* ensure equal height across buttons */
+}
+
+/* Add button (blue) */
+#addButton {
+  background-color: #007bff;
+  color: white;
+}
+#addButton:hover {
+  background-color: #0056b3;
+}
+
+/* Row for Clear + Undo underneath */
+.button-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+/* Equal width for Clear + Undo within their row */
+#clearButton,
+#undoButton {
+  flex: 1;
+}
+
+/* Colors for Clear and Undo */
+#clearButton {
+  background-color: #ff6666; /* red-ish */
+  color: white;
+}
+#clearButton:hover {
+  background-color: #ff4d4d;
+}
+
+#undoButton {
+  background-color: #ffcc66; /* yellow-ish */
+  color: black;
+}
+#undoButton:hover {
+  background-color: #ffbb33;
+}
+
+/* Grocery list styling */
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+li {
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+li.checked {
+  color: green;
+  font-weight: bold;
+  text-decoration: line-through;
+  background-color: #e0ffe0;
+}
+
+/* --- Responsive behavior for larger screens --- */
+/* On wider screens, stack all three buttons full-width in one column */
+@media (min-width: 768px) {
+  /* Put Add beneath the input and make it full width */
   form {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
+    grid-template-columns: 1fr;
   }
-  
-  /* Make the input box a little bigger */
-  input[type="text"] {
-    padding: 10px;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+  #addButton {
+    width: 100%;
   }
-  
-  /* Blue button! */
-  button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  /* Blue button hover effect */
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  /* Grocery list styling */
-  ul {
-    list-style-type: none;
-    padding: 0;
-    max-width: 90vw;
-    width: 400px;
-  }
-  
-  /* Each list item */
-  li {
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 12px 16px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    transition: all 0.3s;
-  }
-  
-  /* Green for done items */
-  li.checked {
-    color: green;
-    font-weight: bold;
-    text-decoration: line-through;
-    background-color: #e0ffe0;
-  }
+
+  /* Stack Clear and Undo as full-width buttons too */
   .button-row {
-    display: flex;
-    gap: 10px;             /* spacing between buttons */
-    justify-content: center; /* center in the page */
-    flex-wrap: wrap;       /* makes it wrap nicely on small screens */
-    margin-bottom: 20px;
+    flex-direction: column;
   }
-  
   .button-row button {
-    padding: 10px 16px;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
+    width: 100%;
   }
-  
-  .button-row button:hover {
-    background-color: #0056b3;
-  }
-   
+}

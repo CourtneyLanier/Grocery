@@ -10,19 +10,21 @@
   <link rel="icon" type="image/png" href="icon.png" />
 </head>
 <body>
-  <h1>Groceries</h1>
+  <div class="container">
+    <h1>Groceries</h1>
 
-  <form id="addItemForm">
-    <input type="text" id="newItem" placeholder="Add new item" />
-    <button type="submit">Add</button>
-  </form>
-  
-  <div class="button-row">
-    <button id="clearButton">Clear</button>
-    <button id="undoButton">Undo</button>
+    <form id="addItemForm">
+      <input type="text" id="newItem" placeholder="Add new item" />
+      <button type="submit" id="addButton">Add</button>
+    </form>
+
+    <div class="button-row">
+      <button type="button" id="clearButton">Clear</button>
+      <button type="button" id="undoButton">Undo</button>
+    </div>
+
+    <ul id="foodList"></ul>
   </div>
-
-  <ul id="foodList"></ul>
 
   <script src="main.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
