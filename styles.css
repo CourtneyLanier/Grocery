@@ -11,7 +11,7 @@ body {
   justify-content: center;
   padding: 2rem;
   margin: 0;
-  background-color: ##C3D6A0;
+  background-color: #9CAF88;
 }
 
 /* Form: input + Add side-by-side on small screens */
@@ -99,7 +99,7 @@ li.checked {
   color: green;
   font-weight: bold;
   text-decoration: line-through;
-  background-color: #D4A017;
+  background-color: #435a34;
 }
 
 /* --- Responsive behavior for larger screens --- */
